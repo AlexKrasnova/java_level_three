@@ -2,10 +2,7 @@ package ru.geekbrains.alexkrasnova.javalevelthree.lesson1;
 
 import ru.geekbrains.alexkrasnova.javalevelthree.lesson1.fruit.Fruit;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Box<T extends Fruit> {
     List<T> fruits;
@@ -30,7 +27,7 @@ public class Box<T extends Fruit> {
     }
 
     public boolean compareTo(Box<?> anotherBox) {
-        if ((this.getWeight() - anotherBox.getWeight()) < 0.00001) {
+        if (Math.abs(this.getWeight() - anotherBox.getWeight()) < 0.00001) {
             return true;
         }
         return false;
