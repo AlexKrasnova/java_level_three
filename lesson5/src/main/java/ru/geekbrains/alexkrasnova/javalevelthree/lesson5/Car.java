@@ -29,15 +29,8 @@ public class Car implements Runnable {
             System.out.println(this.name + " готовится");
             Thread.sleep(500 + (int)(Math.random() * 800));
             System.out.println(this.name + " готов");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            MainClass.startRaceLatch.countDown();
-        }
-
-        try {
-            MainClass.startRaceLatch.await();
-        } catch (InterruptedException e) {
+            MainClass.cyclicBarrier.await();
+        } catch (InterruptedException |BrokenBarrierException e) {
             e.printStackTrace();
         }
 
@@ -45,6 +38,10 @@ public class Car implements Runnable {
             race.getStages().get(i).go(this);
         }
 
-        MainClass.endRaceLatch.countDown();
+        try {
+            MainClass.cyclicBarrier.await();
+        } catch (InterruptedException | BrokenBarrierException e) {
+            e.printStackTrace();
+        }
     }
 }
